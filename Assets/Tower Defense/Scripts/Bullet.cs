@@ -2,49 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+namespace TowerDefense
 {
-    public int Damage = 0;
-    public float Speed = 1f;
-    private Vector3 _startPos;
-    private Vector3 _endPos;
-    public Enemy Target;
-    private float _timer;
-    // Start is called before the first frame update
-    void Start()
+    public class Bullet : MonoBehaviour
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(Target != null)
+        public int Damage = 0;
+        public float Speed = 1f;
+        private Vector3 _startPos;
+        private Vector3 _endPos;
+        public Enemy Target;
+        private float _timer;
+        // Start is called before the first frame update
+        void Start()
         {
-            _endPos = Target.transform.position + Vector3.up;
+            
         }
-        _timer += Time.deltaTime;
-        float t = _timer * Speed;
-        transform.position = Vector3.Lerp(_startPos, _endPos, t);
-        if(t >= 1)
+
+        // Update is called once per frame
+        void Update()
         {
             if(Target != null)
-                Target.TakeDamage(Damage);
+            {
+                _endPos = Target.transform.position + Vector3.up;
+            }
+            _timer += Time.deltaTime;
+            float t = _timer * Speed;
+            transform.position = Vector3.Lerp(_startPos, _endPos, t);
+            if(t >= 1)
+            {
+                if(Target != null)
+                    Target.TakeDamage(Damage);
 
-            Die();
+                Die();
+            }
         }
-    }
 
-    void Die()
-    {
-        Destroy(gameObject);
-    }
+        void Die()
+        {
+            Destroy(gameObject);
+        }
 
-    public void Initialize(Vector3 origin, Enemy target, int damage)
-    {
-        _startPos = origin;
-        Target = target;
-        _endPos = target.transform.position;
-        Damage = damage;
+        public void Initialize(Vector3 origin, Enemy target, int damage)
+        {
+            _startPos = origin;
+            Target = target;
+            _endPos = target.transform.position;
+            Damage = damage;
+        }
     }
 }

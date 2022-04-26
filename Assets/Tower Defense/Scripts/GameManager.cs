@@ -2,76 +2,79 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace TowerDefense
 {
-    public GameObject EnemyPrefab;
-
-    public Enemy[] Enemies
+    public class GameManager : MonoBehaviour
     {
-        get
+        public GameObject EnemyPrefab;
+
+        public Enemy[] Enemies
         {
-            return EnemyList.ToArray();
+            get
+            {
+                return EnemyList.ToArray();
+            }
         }
-    }
-    List<Enemy> EnemyList;
-    
-    public Waypoint[] Waypoints
-    {
-        get
+        List<Enemy> EnemyList;
+        
+        public Waypoint[] Waypoints
         {
-            return WaypointArray;
+            get
+            {
+                return WaypointArray;
+            }
         }
-    }
-    [SerializeField]
-    Waypoint[] WaypointArray;
+        [SerializeField]
+        Waypoint[] WaypointArray;
 
-    private static GameManager _instance;
-    public static GameManager Instance
-    {
-        get
+        private static GameManager _instance;
+        public static GameManager Instance
         {
-            return _instance;
+            get
+            {
+                return _instance;
+            }
         }
-    }
 
-    private void Awake()
-    {
-        if(_instance != null && _instance != this)
+        private void Awake()
         {
-            Destroy(this.gameObject);
-        } else {
-            _instance = this;
+            if(_instance != null && _instance != this)
+            {
+                Destroy(this.gameObject);
+            } else {
+                _instance = this;
+            }
+            DontDestroyOnLoad(gameObject);
+
+            EnemyList = new List<Enemy>();
         }
-        DontDestroyOnLoad(gameObject);
 
-        EnemyList = new List<Enemy>();
-    }
-
-    private void Start()
-    {
-
-    }
-
-    public float spawnTimer = 1f;
-    private float _lastSpawnTime = 0f;
-
-    private void Update()
-    {
-        if(Time.time - _lastSpawnTime >= spawnTimer)
+        private void Start()
         {
-            _lastSpawnTime = Time.time;
-            Spawn();
+
         }
-    }
 
-    void Spawn()
-    {
-        GameObject go = Instantiate(EnemyPrefab, Waypoints[0].transform.position, Quaternion.identity);
-        EnemyList.Add(go.GetComponent<Enemy>());
-    }
+        public float spawnTimer = 1f;
+        private float _lastSpawnTime = 0f;
 
-    public void RemoveEnemy(Enemy enemy)
-    {
-        EnemyList.Remove(enemy);
+        private void Update()
+        {
+            if(Time.time - _lastSpawnTime >= spawnTimer)
+            {
+                _lastSpawnTime = Time.time;
+                Spawn();
+            }
+        }
+
+        void Spawn()
+        {
+            GameObject go = Instantiate(EnemyPrefab, Waypoints[0].transform.position, Quaternion.identity);
+            EnemyList.Add(go.GetComponent<Enemy>());
+        }
+
+        public void RemoveEnemy(Enemy enemy)
+        {
+            EnemyList.Remove(enemy);
+        }
     }
 }

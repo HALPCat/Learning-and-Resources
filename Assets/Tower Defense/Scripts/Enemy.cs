@@ -2,83 +2,86 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+namespace TowerDefense
 {
-    [SerializeField]
-    int HP = 100;
-    private Waypoint _prevPoint;
-    public Waypoint Target;
-
-    float _timer;
-    float _distToTarget;
-    public float MovementSpeed = 1f;
-
-    private void Start()
+    public class Enemy : MonoBehaviour
     {
-        if(_prevPoint == null)
+        [SerializeField]
+        int HP = 100;
+        private Waypoint _prevPoint;
+        public Waypoint Target;
+
+        float _timer;
+        float _distToTarget;
+        public float MovementSpeed = 1f;
+
+        private void Start()
         {
-            _prevPoint = GameManager.Instance.Waypoints[0];
-        }
-        UpdateTarget();
-    }
-
-    private void Update()
-    {
-        _timer += Time.deltaTime;
-
-        float t = _timer / (_distToTarget / MovementSpeed);
-
-        if(t >= 1f)
-        {
-            t = 0f;
+            if(_prevPoint == null)
+            {
+                _prevPoint = GameManager.Instance.Waypoints[0];
+            }
             UpdateTarget();
         }
-        transform.position = Vector3.Lerp(_prevPoint.transform.position, Target.transform.position, t);
-    }
 
-    void UpdateTarget()
-    {
-        //Debug.Log("UpdateTarget");
-        if(Target == null)
+        private void Update()
         {
-            Target = GameManager.Instance.Waypoints[1];
-            _prevPoint = GameManager.Instance.Waypoints[0];
-            _distToTarget = Vector3.Distance(_prevPoint.transform.position, Target.transform.position);
-            return;
+            _timer += Time.deltaTime;
+
+            float t = _timer / (_distToTarget / MovementSpeed);
+
+            if(t >= 1f)
+            {
+                t = 0f;
+                UpdateTarget();
+            }
+            transform.position = Vector3.Lerp(_prevPoint.transform.position, Target.transform.position, t);
         }
 
-        _timer = 0f;
-        for(int i = 0; i < GameManager.Instance.Waypoints.Length; i++)
+        void UpdateTarget()
         {
-            // Target found
-            if(Target == GameManager.Instance.Waypoints[i])
+            //Debug.Log("UpdateTarget");
+            if(Target == null)
             {
-                //if last
-                if(i == GameManager.Instance.Waypoints.Length-1)
+                Target = GameManager.Instance.Waypoints[1];
+                _prevPoint = GameManager.Instance.Waypoints[0];
+                _distToTarget = Vector3.Distance(_prevPoint.transform.position, Target.transform.position);
+                return;
+            }
+
+            _timer = 0f;
+            for(int i = 0; i < GameManager.Instance.Waypoints.Length; i++)
+            {
+                // Target found
+                if(Target == GameManager.Instance.Waypoints[i])
                 {
-                    Die();
-                }else{
-                    _prevPoint = Target;
-                    Target = GameManager.Instance.Waypoints[i+1];
-                    _distToTarget = Vector3.Distance(_prevPoint.transform.position, Target.transform.position);
+                    //if last
+                    if(i == GameManager.Instance.Waypoints.Length-1)
+                    {
+                        Die();
+                    }else{
+                        _prevPoint = Target;
+                        Target = GameManager.Instance.Waypoints[i+1];
+                        _distToTarget = Vector3.Distance(_prevPoint.transform.position, Target.transform.position);
+                    }
+                    i = GameManager.Instance.Waypoints.Length;
                 }
-                i = GameManager.Instance.Waypoints.Length;
             }
         }
-    }
 
-    public void TakeDamage(int damage)
-    {
-        HP -= damage;
-        if(HP <= 0)
+        public void TakeDamage(int damage)
         {
-            Die();
+            HP -= damage;
+            if(HP <= 0)
+            {
+                Die();
+            }
         }
-    }
-    
-    void Die()
-    {
-        GameManager.Instance.RemoveEnemy(this);
-        Destroy(gameObject);
+        
+        void Die()
+        {
+            GameManager.Instance.RemoveEnemy(this);
+            Destroy(gameObject);
+        }
     }
 }
