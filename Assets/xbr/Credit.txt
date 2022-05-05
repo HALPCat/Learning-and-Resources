@@ -1,0 +1,5 @@
+All of the xBR related stuff is taken from here:
+https://github.com/llapuras/UnityXbrShader
+
+Which is taken from here:
+https://github.com/libretro/common-shaders/blob/master/xbrz/shaders/4xbrz.cg
