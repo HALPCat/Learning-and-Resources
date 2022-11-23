@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using HexMap;
 
-namespace HexMap
+namespace LearningAndResources.HexMap
 {
     public class HexMap : MonoBehaviour
     {

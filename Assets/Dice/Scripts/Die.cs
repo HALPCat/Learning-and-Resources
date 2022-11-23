@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Dice
+namespace LearningAndResources.Dice
 {
     public class Die : MonoBehaviour
     {

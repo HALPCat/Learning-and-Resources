@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace xBR
+namespace LearningAndResources.xBR
 {
     public class SpriteMover : MonoBehaviour
     {

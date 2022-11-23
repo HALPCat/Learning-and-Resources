@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Cards
+namespace LearningAndResources.Cards
 {
     public class Deck : MonoBehaviour
     {
