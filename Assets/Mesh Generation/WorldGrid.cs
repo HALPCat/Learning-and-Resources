@@ -34,6 +34,7 @@ namespace LearningAndResources.GridGame
             MeshGenerator.CreateQuads(worldPositions);
         }
 
+        /*
         void OnDrawGizmos()
         {
             if(_gridTiles != null && _gridTiles.Length <= 0)
@@ -47,6 +48,7 @@ namespace LearningAndResources.GridGame
                 Gizmos.DrawCube(gizmoPos, Vector3.one * .1f);
             }
         }
+        */
     }
 
     [System.Serializable]

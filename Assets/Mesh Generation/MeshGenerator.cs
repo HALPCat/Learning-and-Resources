@@ -180,6 +180,7 @@ namespace LearningAndResources.MeshGeneration
             
         }
 
+        /*
         void OnDrawGizmos()
         {
             if(_mesh == null || _mesh.vertices.Length <= 0)
@@ -192,5 +193,6 @@ namespace LearningAndResources.MeshGeneration
                 Gizmos.DrawSphere(_mesh.vertices[i], .1f);
             }
         }
+        */
     }
 }
