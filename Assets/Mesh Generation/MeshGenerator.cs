@@ -86,15 +86,11 @@ namespace LearningAndResources.MeshGeneration
                 _UV[i * 4 + 3] = new Vector2(i+1, i+1);
             }
 
-            /*
-            _tris = new int[6]
-            {
-                // lower left triangle
-                0, 2, 1,
-                // upper right triangle
-                2, 3, 1
-            };
-            */
+            // Wall amount:
+            // (m-1)*n+(n-1)*m
+            // or:
+            // 2*m*n-m-n
+            // https://mathworld.wolfram.com/GridGraph.html
             Debug.Log(_tris[0] + ", " + _tris[1] + ", " + _tris[2] + ", " + _tris[3] + ", " + _tris[4] + ", " + _tris[5]);
             
             // Create mesh
